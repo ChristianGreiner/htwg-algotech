@@ -63,8 +63,15 @@ def huffman(wort):
 
     # order by char
     codes = dict(sorted(codes.items(), key=lambda x: x[0]))
+    print("Codes:")
+    print(codes)
 
-    return codes
+    # encode
+    encoded = ""
+    for c in wort:
+        encoded += codes[c]
+
+    return encoded
 
 print(huffman(wort))
 
