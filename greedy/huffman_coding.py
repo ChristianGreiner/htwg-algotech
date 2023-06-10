@@ -1,6 +1,6 @@
-wort = "izznti"
+wort = "AAAAAAABCCCCCCDDEEEEE"
 
-def zaehlen(wort):
+def count_chars(wort):
     counter = {}
     for c in wort:
         if c in counter:
@@ -8,8 +8,6 @@ def zaehlen(wort):
         else:
             counter[c] = 1
     return counter
-
-wort_liste = zaehlen(wort)
 
 class Node:
     def __init__(self, char: str, count: int, left=None, right=None) -> None:
@@ -20,33 +18,41 @@ class Node:
 
     def __repr__(self) -> str:
         return f"{self.char}: {self.count}"
+    
+    def show(self):
+        print(self.char, self.count)
 
-def huffman(wort_liste):
+def huffman(wort):
     nodes = []
-    final_nodes = []
+
+    wort_liste = count_chars(wort)
+    print("Word list:")
+    print(wort_liste)
+
     # sort ascending
     wort_liste = sorted(wort_liste.items(), key=lambda x: x[1])
-    
+    print("Sorted word list:")
+    print(wort_liste)
+
     for char, count in wort_liste:
         nodes.append(Node(char, count))
-        final_nodes.append(Node(char, count))
 
-    print(nodes)
-    
     while len(nodes) > 1:
-        left = nodes.pop(0)
         right = nodes.pop(0)
-        new_node = Node(f"{left.char}-{right.char}", left.count + right.count, left, right)
+        left = nodes.pop(0)
+        new_node = Node(f"{left.char}-{right.char}", left.count + right.count, left, right)           
 
         # append new node after right node
         nodes.insert(0, new_node)
-        final_nodes.append(new_node)
 
         # sort ascending
         nodes = sorted(nodes, key=lambda x: x.count)
 
-    print(final_nodes)
+    # print all nodes
+    for node in nodes:
+        node.show()
 
+    return nodes
 
-huffman(wort_liste)
+print(huffman(wort))
 
