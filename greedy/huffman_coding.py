@@ -10,8 +10,9 @@ def count_chars(wort):
     return counter
 
 class Node:
-    def __init__(self, char: str, count: int, left=None, right=None) -> None:
+    def __init__(self, char: str, title: str, count: int, left=None, right=None) -> None:
         self.char = char
+        self.title = title
         self.count = count
         self.left = left
         self.right = right
@@ -35,12 +36,12 @@ def huffman(wort):
     print(wort_liste)
 
     for char, count in wort_liste:
-        nodes.append(Node(char, count))
+        nodes.append(Node(char, char, count))
 
     while len(nodes) > 1:
         right = nodes.pop(0)
         left = nodes.pop(0)
-        new_node = Node(f"{left.char}-{right.char}", left.count + right.count, left, right)           
+        new_node = Node(None, f"{left.char}-{right.char}", left.count + right.count, left, right)           
 
         # append new node after right node
         nodes.insert(0, new_node)
@@ -49,10 +50,21 @@ def huffman(wort):
         nodes = sorted(nodes, key=lambda x: x.count)
 
     # print all nodes
-    for node in nodes:
-        node.show()
+    codes = {}
 
-    return nodes
+    def traverse(node, code):
+        if node.char:
+            codes[node.char] = code
+        else:
+            traverse(node.left, code + "0")
+            traverse(node.right, code + "1")
+
+    traverse(nodes[0], "")
+
+    # order by char
+    codes = dict(sorted(codes.items(), key=lambda x: x[0]))
+
+    return codes
 
 print(huffman(wort))
 
