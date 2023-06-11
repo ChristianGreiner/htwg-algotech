@@ -1,3 +1,5 @@
+import heapq
+
 wort = "AAAAAAABCCCCCCDDEEEEE"
 
 def count_chars(wort):
@@ -22,6 +24,12 @@ class Node:
     
     def show(self):
         print(self.char, self.count)
+    
+    def __lt__(self, other):
+        return self.count < other.count
+    
+    def __eq__(self, other):
+        return self.count == other.count
 
 def huffman(wort):
     nodes = []
@@ -30,24 +38,14 @@ def huffman(wort):
     print("Word list:")
     print(wort_liste)
 
-    # sort ascending
-    wort_liste = sorted(wort_liste.items(), key=lambda x: x[1])
-    print("Sorted word list:")
-    print(wort_liste)
-
-    for char, count in wort_liste:
-        nodes.append(Node(char, char, count))
+    for char, count in wort_liste.items():
+        heapq.heappush(nodes, Node(char, char, count))
 
     while len(nodes) > 1:
-        right = nodes.pop(0)
-        left = nodes.pop(0)
-        new_node = Node(None, f"{left.char}-{right.char}", left.count + right.count, left, right)           
-
-        # append new node after right node
-        nodes.insert(0, new_node)
-
-        # sort ascending
-        nodes = sorted(nodes, key=lambda x: x.count)
+        left = heapq.heappop(nodes)
+        right = heapq.heappop(nodes)
+        new_node = Node(None, f"{left.char}-{right.char}", left.count + right.count, left, right)
+        heapq.heappush(nodes, new_node)
 
     # print all nodes
     codes = {}
@@ -74,4 +72,3 @@ def huffman(wort):
     return encoded
 
 print(huffman(wort))
-
