@@ -22,9 +22,6 @@ class Node:
     def __repr__(self) -> str:
         return f"{self.char}: {self.count}"
     
-    def show(self):
-        print(self.char, self.count)
-    
     def __lt__(self, other):
         return self.count < other.count
     
@@ -54,8 +51,8 @@ def huffman(wort):
         if node.char:
             codes[node.char] = code
         else:
-            traverse(node.left, code + "0")
-            traverse(node.right, code + "1")
+            traverse(node.left, code + "1") # flip 0 and 1 to flip the tree
+            traverse(node.right, code + "0")
 
     traverse(nodes[0], "")
 
