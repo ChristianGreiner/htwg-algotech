@@ -1,10 +1,19 @@
-# WIP
+def print_sudoku(sudoku):
+    print("----------------------------")
+    for i in range(9):
+        for j in range(9):
+            print(sudoku[i][j], end = " ")
+        print()
+
+    print("----------------------------")
+
 def find_empty_pos(arr):
     for row in range(9):
         for col in range(9):
             if arr[row][col] == 0:
+                print_sudoku(arr)
                 return row, col
-    return -1, -1
+    return None, None
 
 def box_used(arr, col, row, num):
     for i in range(3):
@@ -35,18 +44,19 @@ def is_valid_move(arr, row, col, num):
     )
 
 def solver(sudoku):
-    row, col = find_empty_pos(sudoku)
+    next_row, next_col = find_empty_pos(sudoku)
 
-    if (row == -1 and col == -1):
+    if (next_row is None and next_col is None):
         return True
+    else:
+        row, col = next_row, next_col
 
     for num in range(1, 10):
         if (is_valid_move(sudoku, row, col, num)):
             sudoku[row][col] = num
             
             # Success
-            succ, _ = solver(sudoku)
-            if succ:
+            if solver(sudoku):
                 return True
             
             # Failed
@@ -67,8 +77,5 @@ if __name__=="__main__":
         [0, 0, 5, 2, 0, 6, 3, 0, 0]
     ]
 
-    _, sudoku = solver(sudoku)
-    for i in range(9):
-        for j in range(9):
-            print(sudoku[i][j], end = " ")
-        print()
+    solver(sudoku)
+    print_sudoku(sudoku)
