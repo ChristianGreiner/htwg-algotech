@@ -1,11 +1,10 @@
-verticies = 4
 INF = 999
 
 def floyd(graph):
     dist = list(map(lambda p: list(map(lambda q: q, p)), graph))
-    for r in range(verticies):
-        for j in range(verticies):
-            for k in range(verticies):
+    for r in range(len(graph)):
+        for j in range(len(graph)):
+            for k in range(len(graph)):
                 dist[j][k] = min(dist[j][k], dist[j][r] + dist[r][k])
 
     return dist
@@ -19,8 +18,8 @@ graph = [
 dist = floyd(graph)
 
 print("----------------------------")
-for p in range(verticies):
-    for q in range(verticies):
+for p in range(len(graph)):
+    for q in range(len(graph)):
         if(dist[p][q] == INF):
             print("INF", end=" ")
         else:
