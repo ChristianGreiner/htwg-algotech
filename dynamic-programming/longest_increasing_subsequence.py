@@ -25,6 +25,6 @@ def longest_increasing_subsequence(arr):
 
 
 # Beispielaufruf
-arr = [10, 22, 9, 33, 21]
+arr = [3,5,76,1,45,2,31,89,90,0,4,15,23,47,95,21,67]
 result = longest_increasing_subsequence(arr)
 print("Längste aufsteigende Teilfolge:", result)

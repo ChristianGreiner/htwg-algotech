@@ -11,7 +11,7 @@ def power(base, exponent):
     # conquer
     if exponent % 2 == 0:
         return result * result
-    else:
-        return result * result * base
+
+    return result * result * base
 
 print(power(2, 5))
