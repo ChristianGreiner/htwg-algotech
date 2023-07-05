@@ -47,5 +47,5 @@ def findMaxSum(nums, left=None, right=None):
  
 if __name__ == '__main__':
  
-    nums = [-1, 3, 4, -5, 9, -2]
+    nums = [1, -2, -3, 1]
     print('The Maximum sum of the sublist is', findMaxSum(nums))
